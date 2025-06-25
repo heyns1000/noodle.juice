@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 VaultMesh™: Operational Dashboard - FAA.Zone™</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+            color: #374151; /* Darker gray text */
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px; /* Wider container for dashboard */
+        }
+        .header-bg {
+            background: linear-gradient(to right, #4f46e5, #7c3aed); /* Indigo to Purple */
+            color: white;
+            padding: 2.5rem 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+        }
+        .header-title {
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 1.5rem;
+        }
+        @media (min-width: 640px) { /* sm */
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (min-width: 1024px) { /* lg */
+            .dashboard-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        .metric-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        .metric-card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #4f46e5; /* Indigo 600 */
+            margin-bottom: 0.5rem;
+        }
+        .metric-card-value {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 800; /* font-extrabold */
+            color: #1f2937; /* Gray 900 */
+        }
+        .content-box {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 2rem; /* text-3xl */
+            font-weight: 700; /* font-bold */
+            color: #1f2937; /* Gray 900 */
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e5e7eb; /* Gray 200 */
+            padding-bottom: 0.5rem;
+        }
+        h3 {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 600; /* font-semibold */
+            color: #374151; /* Gray 700 */
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .sub-section-header {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #4b5563;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed #e5e7eb;
+        }
+        ul {
+            list-style-position: outside;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        ul li {
+            list-style-type: disc;
+            margin-bottom: 0.5rem;
+            color: #4b5563;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        th {
+            background-color: #f9fafb;
+            font-weight: 600;
+            color: #4b5563;
+        }
+        code {
+            background-color: #e2e8f0;
+            padding: 0.2em 0.4em;
+            border-radius: 0.25rem;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+            font-size: 0.9em;
+            color: #4a5568;
+        }
+        .footer-bg {
+            background-color: #1a202c;
+            color: #cbd5e1;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .back-to-summary-btn {
+            background-color: #6366f1; /* Indigo 500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-bottom: 2rem;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .back-to-summary-btn:hover {
+            background-color: #4338ca; /* Indigo 700 */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="header-bg text-center">
+        <div class="container mx-auto px-6">
+            <h1 class="text-4xl sm:text-5xl font-extrabold header-title">📊 VaultMesh™: Operational Dashboard</h1>
+            <p class="mt-2 text-lg sm:text-xl font-medium opacity-90">Centralized Oversight for the FAA™ Global Ecosystem</p>
+            <p class="mt-4 text-sm opacity-80 max-w-2xl mx-auto">
+                This dashboard provides real-time insights into the core operations of VaultMesh™ within the FAA™ Seedwave Admin Portal. From user management to financial ledgers and regional performance, gain comprehensive control and visibility.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+        <a href="vaultmesh-summary-page.html" class="back-to-summary-btn">← Back to Executive Summary</a>
+
+        <section class="content-box">
+            <h2 class="mb-6">Key Performance Indicators</h2>
+            <div class="dashboard-grid">
+                <div class="metric-card">
+                    <p class="metric-card-title">Total Scrolls Claimed</p>
+                    <p class="metric-card-value" id="totalScrolls">0</p>
+                </div>
+                <div class="metric-card">
+                    <p class="metric-card-title">Estimated Claimed Value (USD)</p>
+                    <p class="metric-card-value" id="claimedValue">$0</p>
+                </div>
+                <div class="metric-card">
+                    <p class="metric-card-title">Total Royalty Distributed (USD)</p>
+                    <p class="metric-card-value" id="royaltyDistributed">$0</p>
+                </div>
+                <div class="metric-card">
+                    <p class="metric-card-title">Active Users (Unique)</p>
+                    <p class="metric-card-value" id="activeUsers">0</p>
+                </div>
+                <div class="metric-card">
+                    <p class="metric-card-title">New Scrolls (Last 24h)</p>
+                    <p class="metric-card-value" id="newScrolls24h">0</p>
+                </div>
+                <div class="metric-card">
+                    <p class="metric-card-title">Pending Audits</p>
+                    <p class="metric-card-value" id="pendingAudits">0</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-box">
+            <h2>Financial Overview & Ledgers</h2>
+            <p class="text-gray-700 mb-4">
+                Dive into the financial health of your VaultMesh™ operations. This section provides a summarized view of income streams, categorized by ScrollClaim™ tiers, and provides a gateway to detailed accounting ledgers.
+            </p>
+
+            <h3 class="sub-section-header">Income Distribution by Tier (Current Period)</h3>
+            <div class="overflow-x-auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tier</th>
+                            <th>Total Income (USD)</th>
+                            <th>Royalty Share (%)</th>
+                            <th>Net to FAA™ (USD)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="income-row" data-tier="diamond">
+                            <td>Diamond</td>
+                            <td class="income-total"></td>
+                            <td>10-11%</td>
+                            <td class="income-net"></td>
+                        </tr>
+                        <tr class="income-row" data-tier="gold">
+                            <td>Gold</td>
+                            <td class="income-total"></td>
+                            <td>5%</td>
+                            <td class="income-net"></td>
+                        </tr>
+                        <tr class="income-row" data-tier="silver">
+                            <td>Silver</td>
+                            <td class="income-total"></td>
+                            <td>2%</td>
+                            <td class="income-net"></td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">TOTAL</td>
+                            <td class="font-bold" id="grandTotalIncome">$0</td>
+                            <td colspan="2"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="sub-section-header mt-8">Accounting & Financial Ledgers</h3>
+            <ul class="list-disc pl-6 text-gray-700">
+                <li><a href="#" class="text-indigo-600 hover:underline">View Detailed Transaction Log</a>: Access granular records of all ScrollClaim™ related financial activities.</li>
+                <li><a href="#" class="text-indigo-600 hover:underline">Royalty Payout Reports</a>: Generate reports on royalty distributions by claimant, tier, and period.</li>
+                <li><a href="#" class="text-indigo-600 hover:underline">Revenue Reconciliation</a>: Tools for reconciling income across various platforms and payment gateways.</li>
+                <li><a href="#" class="text-indigo-600 hover:underline">Compliance Audit Trails</a>: Access financial records specifically prepared for regulatory audits.</li>
+            </ul>
+        </section>
+
+        <section class="content-box">
+            <h2>User & Metadata Management</h2>
+            <p class="text-gray-700 mb-4">
+                Manage all users within the FAA™ ecosystem, view their profiles, roles, and the metadata associated with their claimed Scrolls.
+            </p>
+
+            <h3 class="sub-section-header">User Role Distribution</h3>
+            <div class="overflow-x-auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Role</th>
+                            <th>Count</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Admin Staff</td>
+                            <td id="countAdmin">0</td>
+                            <td>Internal FAA™ Seedwave Portal administrators.</td>
+                            <td><a href="#" class="text-indigo-600 hover:underline">Manage Admins</a></td>
+                        </tr>
+                        <tr>
+                            <td>Diamond Claimants</td>
+                            <td id="countDiamondClaimants">0</td>
+                            <td>Owners of Diamond Tier Scrolls.</td>
+                            <td><a href="#" class="text-indigo-600 hover:underline">View Claimants</a></td>
+                        </tr>
+                        <tr>
+                            <td>Gold Claimants</td>
+                            <td id="countGoldClaimants">0</td>
+                            <td>Owners of Gold Tier Scrolls.</td>
+                            <td><a href="#" class="text-indigo-600 hover:underline">View Claimants</a></td>
+                        </tr>
+                        <tr>
+                            <td>Silver Claimants</td>
+                            <td id="countSilverClaimants">0</td>
+                            <td>Owners of Silver Tier Scrolls.</td>
+                            <td><a href="#" class="text-indigo-600 hover:underline">View Claimants</a></td>
+                        </tr>
+                        <tr>
+                            <td>Service Providers</td>
+                            <td id="countServiceProviders">0</td>
+                            <td>External partners providing services (e.g., node operators).</td>
+                            <td><a href="#" class="text-indigo-600 hover:underline">Manage Providers</a></td>
+                        </tr>
+                        <tr>
+                            <td>General Users</td>
+                            <td id="countGeneralUsers">0</td>
+                            <td>Registered users without specific Claim Tiers.</td>
+                            <td><a href="#" class="text-indigo-600 hover:underline">Manage Users</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="sub-section-header mt-8">Scroll Metadata Management</h3>
+            <ul class="list-disc pl-6 text-gray-700">
+                <li><a href="#" class="text-indigo-600 hover:underline">Browse All Scroll Metadata</a>: Search and filter metadata by VaultDNA™, ClaimRoot™, tier, or content type.</li>
+                <li><a href="#" class="text-indigo-600 hover:underline">Update Scroll Properties</a>: Admin tools to modify non-immutable metadata (e.g., content description, market segment).</li>
+                <li><a href="#" class="text-indigo-600 hover:underline">GhostTrace™ Logs Access</a>: Deep dive into the interaction history of any Scroll.</li>
+            </ul>
+        </section>
+
+        <section class="content-box">
+            <h2>Operational Insights: Work & Regions</h2>
+            <p class="text-gray-700 mb-4">
+                Gain insights into the operational workload across different regions and how various "work" categories are progressing within the VaultMesh™ ecosystem.
+            </p>
+
+            <h3 class="sub-section-header">Regional Scroll Distribution & Activity</h3>
+            <div class="overflow-x-auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Region</th>
+                            <th>Active Scrolls</th>
+                            <th>New Claims (Last 30d)</th>
+                            <th>Top Sector</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>North America</td>
+                            <td id="regionNAActive">0</td>
+                            <td id="regionNANew">0</td>
+                            <td id="regionNATop"></td>
+                        </tr>
+                        <tr>
+                            <td>Europe</td>
+                            <td id="regionEUActive">0</td>
+                            <td id="regionEUNew">0</td>
+                            <td id="regionEUTop"></td>
+                        </tr>
+                        <tr>
+                            <td>Asia-Pacific</td>
+                            <td id="regionAPACActive">0</td>
+                            <td id="regionAPACNew">0</td>
+                            <td id="regionAPACTop"></td>
+                        </tr>
+                        <tr>
+                            <td>Africa</td>
+                            <td id="regionAFRActive">0</td>
+                            <td id="regionAFRNew">0</td>
+                            <td id="regionAFRTop"></td>
+                        </tr>
+                        <tr>
+                            <td>South America</td>
+                            <td id="regionSAActive">0</td>
+                            <td id="regionSANew">0</td>
+                            <td id="regionSATop"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="sub-section-header mt-8">Workload & Task Management</h3>
+            <ul class="list-disc pl-6 text-gray-700">
+                <li><a href="#" class="text-indigo-600 hover:underline">Pending Scroll Deployments</a>: Oversee Scrolls awaiting final deployment to FAA.Zone™.</li>
+                <li><a href="#" class="text-indigo-600 hover:underline">Royalty Payout Queue</a>: Monitor and approve upcoming royalty disbursements.</li>
+                <li><a href="#" class="text-indigo-600 hover:underline">Support Ticket Dashboard</a>: Manage user inquiries and technical support requests.</li>
+                <li><a href="#" class="text-indigo-600 hover:underline">System Maintenance Logs</a>: Review automated and manual system operations.</li>
+            </ul>
+        </section>
+
+        <section class="content-box">
+            <h2>Backend Settings & System Configuration</h2>
+            <p class="text-gray-700 mb-4">
+                Access and configure core backend settings for the VaultMesh™ framework and its integration with the FAA™ Seedwave Admin Portal.
+            </p>
+            <ul class="list-disc pl-6 text-gray-700">
+                <li><a href="#" class="text-indigo-600 hover:underline">API Key Management</a>: Generate, revoke, and manage API keys for integrations.</li>
+                <li><a href="#" class="text-indigo-600 hover:underline">Tier Configuration</a>: Adjust parameters for Diamond, Gold, and Silver tiers, including royalty percentages and feature sets.</li>
+                <li><a href="#" class="text-indigo-600 hover:underline">Security Protocols</a>: Configure access controls, encryption standards, and audit logging levels.</li>
+                <li><a href="#" class="text-indigo-600 hover:underline">Notification Settings</a>: Customize system alerts for critical events (e.g., payment failures, new Diamond claims).</li>
+                <li><a href="#" class="text-indigo-600 hover:underline">System Health Monitoring</a>: View logs and performance metrics for all VaultMesh™ components (PulseGrid™, OmniSignal™).</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-bg text-center py-8">
+        <div class="container mx-auto px-6">
+            <p class="text-sm">© 2025 FAA.Zone™. All rights reserved. VaultMesh™ is a trademark of Fruitful America LLC.</p>
+            <p class="text-xs mt-2 opacity-70">
+                <a href="#" class="text-blue-300 hover:text-white mx-2">Privacy Policy</a> |
+                <a href="#" class="text-blue-300 hover:text-white mx-2">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Function to generate a random number within a range (inclusive)
+            const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+            // Function to format number as USD
+            const formatUSD = (num) => `$${num.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+
+            // --- KPI Data ---
+            const totalScrolls = getRandomInt(50000, 150000);
+            const claimedValue = getRandomInt(10000000, 50000000); // 10M to 50M USD
+            const royaltyDistributed = Math.round(claimedValue * (getRandomInt(5, 8) / 100)); // 5-8% of claimed value as royalty
+
+            document.getElementById('totalScrolls').textContent = totalScrolls.toLocaleString();
+            document.getElementById('claimedValue').textContent = formatUSD(claimedValue);
+            document.getElementById('royaltyDistributed').textContent = formatUSD(royaltyDistributed);
+            document.getElementById('activeUsers').textContent = getRandomInt(10000, 30000).toLocaleString();
+            document.getElementById('newScrolls24h').textContent = getRandomInt(100, 500).toLocaleString();
+            document.getElementById('pendingAudits').textContent = getRandomInt(5, 20).toLocaleString();
+
+            // --- Financial Overview Data ---
+            const diamondIncome = getRandomInt(500000, 2000000); // 0.5M to 2M
+            const goldIncome = getRandomInt(200000, 800000);     // 0.2M to 0.8M
+            const silverIncome = getRandomInt(50000, 300000);    // 0.05M to 0.3M
+
+            const incomeRows = document.querySelectorAll('.income-row');
+            let grandTotal = 0;
+
+            incomeRows.forEach(row => {
+                const tier = row.dataset.tier;
+                let totalIncome = 0;
+                let netToFAA = 0;
+                let royaltyPercentage = 0; // Stored as a decimal for calculation
+
+                switch(tier) {
+                    case 'diamond':
+                        totalIncome = diamondIncome;
+                        royaltyPercentage = getRandomInt(10, 11) / 100; // 10-11%
+                        break;
+                    case 'gold':
+                        totalIncome = goldIncome;
+                        royaltyPercentage = 5 / 100; // 5%
+                        break;
+                    case 'silver':
+                        totalIncome = silverIncome;
+                        royaltyPercentage = 2 / 100; // 2%
+                        break;
+                }
+
+                netToFAA = totalIncome - (totalIncome * royaltyPercentage);
+                grandTotal += totalIncome;
+
+                row.querySelector('.income-total').textContent = formatUSD(totalIncome);
+                row.querySelector('.income-net').textContent = formatUSD(netToFAA);
+            });
+            document.getElementById('grandTotalIncome').textContent = formatUSD(grandTotal);
+
+            // --- User Role Distribution Data ---
+            const totalUsers = parseInt(document.getElementById('activeUsers').textContent.replace(/,/g, '')); // Re-use activeUsers for total base
+            const adminCount = getRandomInt(5, 15);
+            const diamondClaimants = getRandomInt(Math.floor(totalUsers * 0.01), Math.floor(totalUsers * 0.03)); // 1-3%
+            const goldClaimants = getRandomInt(Math.floor(totalUsers * 0.03), Math.floor(totalUsers * 0.08));   // 3-8%
+            const silverClaimants = getRandomInt(Math.floor(totalUsers * 0.05), Math.floor(totalUsers * 0.15)); // 5-15%
+            const serviceProviders = getRandomInt(20, 50);
+            const generalUsers = totalUsers - (adminCount + diamondClaimants + goldClaimants + silverClaimants + serviceProviders);
+
+            document.getElementById('countAdmin').textContent = adminCount.toLocaleString();
+            document.getElementById('countDiamondClaimants').textContent = diamondClaimants.toLocaleString();
+            document.getElementById('countGoldClaimants').textContent = goldClaimants.toLocaleString();
+            document.getElementById('countSilverClaimants').textContent = silverClaimants.toLocaleString();
+            document.getElementById('countServiceProviders').textContent = serviceProviders.toLocaleString();
+            document.getElementById('countGeneralUsers').textContent = Math.max(0, generalUsers).toLocaleString(); // Ensure no negative values
+
+            // --- Regional Data ---
+            const sectors = ['Banking & Finance', 'Agriculture & Biotech', 'Creative Tech', 'Logistics', 'Education & IP', 'Health & Hygiene', 'AI, Logic & Grid', 'SaaS & Licensing', 'Mining & Resources'];
+
+            const populateRegion = (prefix) => {
+                const active = getRandomInt(5000, 20000);
+                const newClaims = getRandomInt(50, 300);
+                const topSector = sectors[getRandomInt(0, sectors.length - 1)];
+                document.getElementById(`${prefix}Active`).textContent = active.toLocaleString();
+                document.getElementById(`${prefix}New`).textContent = newClaims.toLocaleString();
+                document.getElementById(`${prefix}Top`).textContent = topSector;
+            };
+
+            populateRegion('regionNA');
+            populateRegion('regionEU');
+            populateRegion('regionAPAC');
+            populateRegion('regionAFR');
+            populateRegion('regionSA');
+        });
+    </script>
+</body>
+</html>
