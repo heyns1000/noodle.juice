@@ -1,1 +1,1 @@
-![Madiba Mock](Madiba_mock.png)
+![Fruitful_HighRes](Fruitful_HighRes.png)
