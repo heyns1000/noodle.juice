@@ -1068,17 +1068,22 @@
                     });
 
                     // Listener for Live Motion Projects Count
+                    // Ensure the path matches the security rules: /artifacts/{appId}/sonicNestMetrics/liveProjects
                     const liveCountDocRef = doc(db, `artifacts/${APP_ID}/sonicNestMetrics`, 'liveProjects');
                     unsubscribeLiveCount = onSnapshot(liveCountDocRef, (docSnap) => {
                         if (docSnap.exists()) {
                             setLiveMotionProjectsCount(docSnap.data().count || 0);
+                            console.log("Live projects count updated:", docSnap.data().count); // Debug log
                         } else {
                             // Initialize if it doesn't exist
-                            setDoc(liveCountDocRef, { count: 0 }).catch(console.error);
+                            setDoc(liveCountDocRef, { count: 0 }).catch(console.error); // Ensure initialization is attempted
                             setLiveMotionProjectsCount(0);
+                            console.log("Live projects count initialized to 0."); // Debug log
                         }
                     }, (error) => {
                         console.error("Error fetching live projects count:", error);
+                        // This is the error the user reported. Provide guidance.
+                        setFirestoreError("Permission denied for live projects count. Please update Firebase Security Rules.");
                     });
 
                 } else if (isAuthReady && !userId) {
@@ -2301,7 +2306,7 @@
 
         // IMPORTANT: In a real app, never hardcode your Spotify token like this.
         // Implement an OAuth 2.0 flow to securely obtain and refresh tokens.
-        const SPOTIFY_ACCESS_TOKEN = 'BQBDSZ232IQmSLV1BROkxqdwNMoGhtitKOJBjDzE-Lu9YKsSK1RKVwXNfYfncP2wf6Fj6xcYlnGD75baEqOmd3XtxhUhB-X6koPd92H9S0rQBqZ0HSKpsb04HiAme_FtqVLket7_s07gH9y1nxuXfYNV-j1x1kdXGEpzlx1'; // Replace with a valid token for actual testing
+        const SPOTIFY_ACCESS_TOKEN = 'BQBDSZ232IQmSLV1BROkxqdwNMoGhtitKOJBjDzE-Lu9YKsSK1RKVwXNfYfncP2wf6Fj6xcYlnGD75baEqOmd3XtxhUhB-X6koPd92H-XfYNV-j1x1kdXGEpzlx1'; // Replace with a valid token for actual testing
 
 
         async function fetchSpotifyWebApi(endpoint, method, body = null) {
