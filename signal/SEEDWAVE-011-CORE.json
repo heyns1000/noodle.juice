@@ -1,0 +1,59 @@
+{
+  "id": "SEEDWAVE-011-CORE",
+  "title": "Genesis Signal — Fruitful Global Ecosystem",
+  "declared_by": "Heyns Schoeman",
+  "declared_at": "2025-04-08T00:00:00Z",
+  "location": "Pretoria, Gauteng, South Africa",
+  "status": "ACTIVE",
+  "version": "1.0.0",
+  "description": "First and only global eco built by AI beyond AI. The genesis signal locks the origin of the Fruitful/HotStack/VaultMesh ecosystem and anchors the 9-second VaultMesh pulse rhythm.",
+  "ecosystem": {
+    "name": "Fruitful Global",
+    "components": [
+      "HotStack™",
+      "BuildNest™",
+      "NoodleNexus™",
+      "LicenseVault™",
+      "VaultMesh™",
+      "PulseTrade™",
+      "ClaimRoot™",
+      "BareCart™",
+      "CrateLogic™",
+      "Store40D™",
+      "SeedwaveCore™",
+      "SyncBridge™",
+      "Banimal™",
+      "FruitfulWebhook™"
+    ],
+    "pulse_interval_seconds": 9,
+    "grain_value_usd": 0.01,
+    "care_loop_percent": 15,
+    "care_loop_beneficiary": "Banimals™ (wildlife rescue)",
+    "domain_root": "faa.zone",
+    "cloudflare_account": "ad41fcfe1a84b27c62cc5cc9d590720e"
+  },
+  "oracle_bone": {
+    "description": "Immutable foundation lock — SHA-256 of genesis payload",
+    "hash_algorithm": "SHA-256",
+    "locked": true
+  },
+  "deployment": {
+    "primary": "hotstack.faa.zone",
+    "intake_bucket": "hotstack-intake-bucket",
+    "database": "hotstack-db",
+    "database_id": "b89c40c4-741a-42bf-aa2b-eb030b616b61",
+    "worker_account": "ad41fcfe1a84b27c62cc5cc9d590720e"
+  },
+  "philosophy": [
+    "Zero-signup instant builds — <3 min from upload to live site",
+    "Fixed-cost sovereign infrastructure — $50-60/month for 80+ systems",
+    "Grain-level pricing transparency — 1 grain = $0.01 USD",
+    "Care Loop — 15% of all revenue to animal rescue",
+    "No PaaS lock-in — Cloudflare + self-hosted only",
+    "9-second VaultMesh pulse — heartbeat of the ecosystem",
+    "Accessibility first — WCAG 2.1 AA compliance"
+  ],
+  "brands_in_vault": 13713,
+  "sector_hubs": 35,
+  "target_repos": 80
+}
