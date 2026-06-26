@@ -1,0 +1,1 @@
+"""SeedwaveCore™ — Unified core layer."""
