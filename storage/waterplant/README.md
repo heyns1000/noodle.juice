@@ -1,5 +1,7 @@
 # Waterplant Memory Ledger
 
+> **Follow the tail with care: each turn reveals what is known, what is missing, and where the next honest drop belongs.**
+
 This is an append-only, evidence-first ledger for the Explorer Ecosystem — Finding the Tail.
 
 ## Rules
