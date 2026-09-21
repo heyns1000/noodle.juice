@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CodeNest — Explorer Ecosystem</title>
+<style>
+  :root{
+    --bg:#070a17; --panel:rgba(17,24,39,.78); --line:rgba(255,255,255,.12);
+    --text:#f8fafc; --muted:#a7b2c7; --red:#ff4d6d; --orange:#ff9f1c;
+    --yellow:#ffd166; --green:#4ade80; --blue:#4cc9f0; --violet:#b388ff;
+  }
+  *{box-sizing:border-box} body{margin:0;font:15px Inter,system-ui,sans-serif;color:var(--text);background:radial-gradient(circle at top right,#241247 0,transparent 32%),radial-gradient(circle at bottom left,#073a4c 0,transparent 28%),var(--bg)}
+  .app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+  aside{padding:24px 16px;border-right:1px solid var(--line);background:rgba(4,7,18,.75)}
+  .brand{font-size:20px;font-weight:900;letter-spacing:.5px}.brand small{display:block;color:var(--muted);font-size:11px;margin-top:5px}
+  nav{margin-top:32px} nav button{width:100%;text-align:left;color:var(--muted);background:none;border:0;padding:12px;border-radius:10px;cursor:pointer}
+  nav button:hover,nav button.active{background:rgba(255,255,255,.08);color:white}
+  main{padding:28px;max-width:1500px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;gap:20px;align-items:start}
+  h1{margin:0;font-size:30px}.sub{color:var(--muted);margin:8px 0 0}.badge{padding:8px 12px;border:1px solid var(--violet);border-radius:999px;color:var(--violet);font-weight:800;font-size:12px}
+  .rainbow{height:4px;border:0;margin:24px 0;background:linear-gradient(90deg,var(--red),var(--orange),var(--yellow),var(--green),var(--blue),var(--violet))}
+  .grid{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;backdrop-filter:blur(10px)}
+  .metric{font-size:28px;font-weight:900;margin-top:10px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:1px}
+  .content{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;margin-top:14px}.section-title{font-weight:850;font-size:16px;margin-bottom:14px}
+  .tail{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line)}.tail:last-child{border:0}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:9px}.critical{background:var(--red)}.high{background:var(--orange)}.medium{background:var(--yellow)}.verified{background:var(--green)}.linked{background:var(--blue)}.unresolved{background:var(--violet)}
+  .state{font-size:11px;font-weight:800;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.08)}
+  .trinity{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.trinity div{text-align:center;padding:15px 8px;border-radius:12px;background:rgba(255,255,255,.05)}
+  .disabled{opacity:.7;border-style:dashed}.footer{color:var(--muted);font-size:12px;margin-top:16px}
+  @media(max-width:800px){.app{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--line)}nav{display:flex;overflow:auto;margin-top:12px}nav button{min-width:max-content}.grid,.content{grid-template-columns:1fr}.top{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="brand">CODENEST <small>Explorer Ecosystem — Finding the Tail</small></div>
+    <nav>
+      <button class="active">Hub</button><button>Explorer / Tail</button><button>Repositories</button>
+      <button>Services</button><button>Monitors</button><button>Config</button><button>Supabase · Unresolved</button>
+    </nav>
+  </aside>
+  <main>
+    <div class="top">
+      <div><h1>Explorer Hub</h1><p class="sub">Evidence-first mapping. Every status below is mock data for review.</p></div>
+      <div class="badge">WIREFRAME · NO LIVE CONNECTIONS</div>
+    </div>
+    <div class="rainbow"></div>
+    <section class="grid">
+      <div class="card"><div class="label">Repositories</div><div class="metric">84</div><span class="state">MOCK DISCOVERY</span></div>
+      <div class="card"><div class="label">Evidence Linked</div><div class="metric">27</div><span class="state">MOCK</span></div>
+      <div class="card"><div class="label">Open Tails</div><div class="metric">12</div><span class="state">REVIEW QUEUE</span></div>
+      <div class="card"><div class="label">Unresolved Systems</div><div class="metric">4</div><span class="state">NO CONNECTOR</span></div>
+    </section>
+    <section class="content">
+      <div class="card">
+        <div class="section-title">Finding the Tail</div>
+        <div class="tail"><span><i class="dot critical"></i>Supabase project, schema and RLS target</span><b class="state">CRITICAL</b></div>
+        <div class="tail"><span><i class="dot high"></i>Repository-to-evidence provenance map</span><b class="state">HIGH</b></div>
+        <div class="tail"><span><i class="dot high"></i>QS site evidence to cost reconciliation</span><b class="state">HIGH</b></div>
+        <div class="tail"><span><i class="dot medium"></i>Brand/dashboard source alignment</span><b class="state">MEDIUM</b></div>
+      </div>
+      <div class="card">
+        <div class="section-title">Trinity Status</div>
+        <div class="trinity">
+          <div><strong>Gorilla</strong><br><span class="state"><i class="dot verified"></i>MOCK READY</span></div>
+          <div><strong>Mountain</strong><br><span class="state"><i class="dot linked"></i>MOCK LINKED</span></div>
+          <div><strong>Fox</strong><br><span class="state"><i class="dot unresolved"></i>PLANNED</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="section-title">Evidence States</div>
+        <p><i class="dot verified"></i>Verified &nbsp; <i class="dot linked"></i>Linked &nbsp; <i class="dot unresolved"></i>Unresolved</p>
+        <p><i class="dot critical"></i>Critical &nbsp; <i class="dot high"></i>High &nbsp; <i class="dot medium"></i>Medium</p>
+      </div>
+      <div class="card disabled">
+        <div class="section-title">Supabase</div>
+        <p class="sub">UNRESOLVED</p>
+        <p>No project ID, schema, RLS policy, or approved write path has been attached.</p>
+      </div>
+    </section>
+    <p class="footer">Preview only. No data is collected, changed, synchronized, or claimed as live.</p>
+  </main>
+</div>
+</body>
+</html>
